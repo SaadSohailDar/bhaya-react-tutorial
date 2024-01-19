@@ -37,19 +37,14 @@ const App = () => {
 
 //Delete Task
 
-const deleteTask=(id)=>{
-  setTasks(tasks.filter((task)=>task.id !== id))
+const deleteTask=()=>{
+  console.log('delete',id)
 }
 
  return(
   <>
     <Header title='Task Tracker' />
-    {tasks.length>0 ? (
-    <Tasks tasks={tasks} 
-    onDelete={deleteTask} />
-    ):(
-      'No tasks to Show'
-    )}
+    <Tasks tasks={tasks} onDelete={deleteTask} />
   </>
 );
 };
