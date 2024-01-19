@@ -1,58 +1,55 @@
 import React, { useState } from "react";
+
 import "./App.scss";
+
+import Header from "./components/Header";
+import Task from "./components/Tasks";
+import Tasks from "./components/Tasks";
+
+
 const App = () => {
-  const [newItem,setNewItem]=useState("")
-  const [todos,setToDos]=useState([])
-  //setNewItem("adssadasd");
-  function handleSubmit(e){
-    e.preventDefault()
-    setToDos((currentTodos)=>{
-      return [
-        ...currentTodos,
-        {id:crypto.randomUUID(),title:newItem,completed:false},
-      ]
-    })
+  const[tasks,setTasks]=useState([
+    {
+        id:1,
+        Text:'Halliluya 1',
+        day:'2-3-4',
+        reminder:true,
+    },
+    {
+        id:2,
+        Text:'Halliluya 2',
+        day:'2-3-4',
+        reminder:true,
+    },
+    {
+        id:3,
+        Text:'Halliluya 3',
+        day:'2-3-4',
+        reminder:true,
+    },
+    {
+        id:4,
+        Text:'Halliluya 4',
+        day:'2-3-4',
+        reminder:false,
+    }
+])
 
-    setNewItem("");
-  }
+//Delete Task
 
-  function toggleTodo(id,completed)
-  {
-    setToDos(currentTodos=>{
-      return currentTodos.map(todo=>{
-        if(todo.id===id)
-        {
-        return {...todo,completed}
-        }
-        return todo
-      })
-    })
-  }
+const deleteTask=(id)=>{
+  setTasks(tasks.filter((task)=>task.id !== id))
+}
 
-  return( 
+ return(
   <>
-  <form onSubmit={handleSubmit} className="new-item-form">
-    <div className="form-row">
-      <label htmlFor="item">New Item</label>
-      <input  value={newItem} onChange={e=> setNewItem(e.target.value)} type="text" id="item" />
-    </div>  
-
-    <button className="btn">Add</button>  
-    
-  </form>
-  <h1 className="header">Todo List</h1>
-  <ul className="list">
-    {todos.map(todo=>{
-      return <li key={todo.id}>
-      <label>
-        <input type="checkbox" checked={todo.completed} onChange={e=>toggleTodo(todo.id,e.target.id)}/>
-        {todo.title}
-      </label>
-      <button className="btn btn-danger">Delete</button>
-    </li>
-    })}
-  </ul>
-
+    <Header title='Task Tracker' />
+    {tasks.length>0 ? (
+    <Tasks tasks={tasks} 
+    onDelete={deleteTask} />
+    ):(
+      'No tasks to Show'
+    )}
   </>
 );
 };
